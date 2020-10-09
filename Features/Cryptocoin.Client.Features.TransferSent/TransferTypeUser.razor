@@ -1,0 +1,62 @@
+﻿@namespace Cryptocoin.Client.Feature.Transfer.Sent
+@code{
+    [Parameter]
+    public string TxtGenerateQrcode { get; set; }
+    [Parameter]
+    public string PathApiInitQrCode { get; set; }
+    [Parameter]
+    public string TransferTypeUserPanelTitle { get; set; }
+    [Parameter]
+    public string LabelNumberOfTokensToSend { get; set; }
+    [Parameter]
+    public string BtnCancel { get; set; }
+    [Parameter]
+    public string BtnWaitingForPayment { get; set; }
+    [Parameter]
+    public int WidthQrCode { get; set; }
+    [Parameter]
+    public int HeightQrCode { get; set; }
+    [Parameter]
+    public EventCallback<bool> ClickCancel { get; set; }
+    [Parameter]
+    public string TxtAwaitingPayment { get; set; }
+    [Parameter]
+    public int AmountInStock { get; set; }
+}
+
+<div class="card-header">
+    <h4>
+        @TransferTypeUserPanelTitle
+    </h4>
+</div>
+<div class="card-body">
+    <div class="form-group ">
+        <EditForm Model="@this" OnValidSubmit="GenerateQrCode">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <label for="input-amount"> @LabelNumberOfTokensToSend</label>
+            <input class="form-control col-lg-4" type="number" min="10" max="@AmountInStock" step="10" @bind="@this.Amount" @bind:event="oninput" />  <br />
+            <button class="btn btn-primary" type="submit">@BtnWaitingForPayment</button>
+            <button @onclick="(() => ClickCancel.InvokeAsync(true))" class="btn btn-danger ">@BtnCancel</button>
+        </EditForm>
+        <br />
+        @if (Loading)
+        {
+            <p>@TxtGenerateQrcode</p>
+            <Loading_Component Loading="Loading"></Loading_Component>
+        }
+        else
+        {
+            @if (DisplayQrCode)
+            {
+                <div class="center">
+                    <p>
+                        @GetSomeRawHtml(String.Format(TxtAwaitingPayment, Amount))
+                    </p>
+                    <img width="@WidthQrCode" height="@HeightQrCode" src="@QrCode" alt="Alternate Text" />
+                </div>
+            }
+        }
+    </div>
+    <br />
+</div>

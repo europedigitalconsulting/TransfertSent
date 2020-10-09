@@ -1,0 +1,84 @@
+﻿@page "/TransferSent"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<TransferSent> Loc
+@using Cryptocoin.Client.Feature.Transfer.Sent
+@namespace Cryptocoin.Client.Pages
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>@Loc["TitlePage"]</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">@Loc["Home"]</a></div>
+                <div class="breadcrumb-item"><a href="#">@Loc["Admin"]</a></div>
+                <div class="breadcrumb-item">@Loc["TitlePage"]</div>
+            </div>
+        </div>
+        <div class="section-body">
+            <TransferSentContainer ListPays="@ListPays"
+                                   ListContact="@ListContact"
+                                   PathApiValidTransfer="/api/TransferSent/ValidTransferFriend"
+                                   PathApiInitQrCode="/api/QrCodeGenerator?link="
+                                   PathApiGenerateRefCode="/api/TransferSent/ValidTransferPhysical"
+                                   PathApiSendEmailInviteUser="/api/TransferSent/InviteUser/"
+                                   LabelSelectTypeFriend=@Loc["LabelSelectTypeFriend"]
+                                   LabelSelectTypeUser=@Loc["LabelSelectTypeUser"]
+                                   LabelSelectTypePhysical=@Loc["LabelSelectTypePhysical"]
+                                   CssClassDropDownListTypeTransfer=@Loc["CssClassDropDownListTypeTransfer"]
+                                   CssClassDisplayComponentTypeTransfer=@Loc["CssClassDisplayComponentTypeTransfer"]
+                                   LabelDropDownListTypeTransfer=@Loc["LabelDropDownListTypeTransfer"]
+                                   BtnCancel=@Loc["BtnCancel"]
+                                   BtnValid=@Loc["BtnValid"]
+                                   BtnSend=@Loc["BtnSend"]
+                                   BtnConfirmSend=@Loc["BtnConfirmSend"]
+                                   BtnReturnDashboard=@Loc["BtnReturnDashboard"]
+                                   BtnWaitingForPayment=@Loc["BtnWaitingForPayment"]
+                                   BtnConfirmTransfer=@Loc["BtnConfirmTransfer"]
+                                   BtnSelectSender=@Loc["BtnSelectSender"]
+                                   BtnSearch=@Loc["BtnSearch"]
+                                   ContactListPanelTitle=@Loc["ContactListPanelTitle"]
+                                   TransferTypeFriendPanelTitle=@Loc["TransferTypeFriendPanelTitle"]
+                                   TransferTypeUserPanelTitle=@Loc["TransferTypeUserPanelTitle"]
+                                   TransferTypePhysicalPanelTitle=@Loc["TransferTypePhysicalPanelTitle"]
+                                   LabelNumberOfTokensToSend=@Loc["LabelNumberOfTokensToSend"]
+                                   TxtYouHaveSelected=@Loc["TxtYouHaveSelected"]
+                                   TxtDescFormTransferPhysical=@Loc["TxtDescFormTransferPhysical"]
+                                   TxtAmountToTokens=@Loc["TxtAmountToTokens"]
+                                   TxtTransferInProgress=@Loc["TxtTransferInProgress"]
+                                   TxtInviteUseApplication=@Loc["TxtInviteUseApplication"]
+                                   TxtPlaceholderNameSender=@Loc["TxtPlaceholderNameSender"]
+                                   TxtPlaceholderMailSender=@Loc["TxtPlaceholderMailSender"]
+                                   TxtRefDestinationGTW=@Loc["TxtRefDestinationGTW"]
+                                   TxtCountryNotDestinationList=@Loc["TxtCountryNotDestinationList"]
+                                   TxtGenerateQrcode=@Loc["TxtGenerateQrcode"]
+                                   TxtAwaitingPayment=@Loc["TxtAwaitingPayment"]
+                                   TxtSelectContact=@Loc["TxtSelectContact"]
+                                   TxtGenerateCodeRef=@Loc["TxtGenerateCodeRef"]
+                                   WidthQrCode="200"
+                                   HeightQrCode="200"
+                                   AmountInStock="3000">
+            </TransferSentContainer>
+        </div>
+    </section>
+</div>
+@code{
+    protected List<Contact> ListContact { get; set; } = new List<Contact>();
+    protected List<SelectListItem> ListPays { get; set; } = new List<SelectListItem>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetListContact();
+
+        ListPays.Add(new SelectListItem { Value = "1", Text = "France" });
+        ListPays.Add(new SelectListItem { Value = "2", Text = "Colombie" });
+        ListPays.Add(new SelectListItem { Value = "3", Text = "Liban" });
+        ListPays.Add(new SelectListItem { Value = "4", Text = "Chine" });
+    }
+
+    private void GetListContact()
+    {
+        for (int i = 0; i < 25; i++)
+        {
+            ListContact.Add(new Contact { DisplayName = i + "User Test" + i, Email = i + "@test.com", Id = i });
+        }
+    }
+}
