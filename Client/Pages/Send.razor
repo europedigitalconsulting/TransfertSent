@@ -1,5 +1,5 @@
-﻿@page "/TransferSent"
-@inject Microsoft.Extensions.Localization.IStringLocalizer<TransferSent> Loc
+﻿@page "/send"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Send> Loc
 @using Cryptocoin.Client.Feature.Transfer.Sent
 @namespace Cryptocoin.Client.Pages
 
@@ -9,8 +9,8 @@
             <h1>@Loc["TitlePage"]</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">@Loc["Home"]</a></div>
-                <div class="breadcrumb-item"><a href="#">@Loc["Admin"]</a></div>
-                <div class="breadcrumb-item">@Loc["TitlePage"]</div>
+                <div class="breadcrumb-item"><a href="#">@Loc["Wallet"]</a></div>
+                <div class="breadcrumb-item">@Loc["Send"]</div>
             </div>
         </div>
         <div class="section-body">
