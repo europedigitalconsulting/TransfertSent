@@ -1,0 +1,30 @@
+﻿@page "/receive/{TypeReceived}"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Resources> Loc
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Receive> LocReceive
+@using Cryptocoin.Client.Feature.Transfer.Received
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>@LocReceive["Title"]</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="/">@Loc["Home"]</a></div>
+                <div class="breadcrumb-item"><a href="/MyWallet">@Loc["Wallet"]</a></div>
+                <div class="breadcrumb-item">@Loc["Receive"]</div>
+            </div>
+        </div>
+        <div class="section-body">
+            <TransferReceivedContainer TypeReceived="@TypeReceived"
+                                       PathApiTransferQrCodeReceived="/api/TransferReceived/QrCodeReceived/"
+                                       PathApiTransferValidTransfer="/api/TransferReceived/ValidTransfer/"
+                                       TxtAmountToSend="@LocReceive["TxtAmountToSend"]"
+                                       BtnValidTransaction="@LocReceive["BtnValidTransaction"]"
+                                       TxtUser="@LocReceive["TxtUser"]">
+            </TransferReceivedContainer>
+        </div>
+    </section>
+</div>
+@code{
+    [Parameter]
+    public string TypeReceived { get; set; }
+}

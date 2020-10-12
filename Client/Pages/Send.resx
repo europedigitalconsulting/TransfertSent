@@ -201,11 +201,14 @@
   <data name="TxtPlaceholderCurrency" xml:space="preserve">
     <value>Devise</value>
   </data>
+  <data name="TxtPlaceholderFirstnameSender" xml:space="preserve">
+    <value>Prénom du destinateur</value>
+  </data>
+  <data name="TxtPlaceholderLastnameSender" xml:space="preserve">
+    <value>Nom du destinataire</value>
+  </data>
   <data name="TxtPlaceholderMailSender" xml:space="preserve">
     <value>Email du destinateur</value>
-  </data>
-  <data name="TxtPlaceholderNameSender" xml:space="preserve">
-    <value>Nom du destinateur</value>
   </data>
   <data name="TxtRefDestinationGTW" xml:space="preserve">
     <value>Merci d’indiquer la référence suivante à votre destinateur il pourra la retirer dans l’une des agences GTW</value>

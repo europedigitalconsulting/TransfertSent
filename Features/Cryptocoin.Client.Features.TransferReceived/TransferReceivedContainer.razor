@@ -1,0 +1,34 @@
+﻿@namespace Cryptocoin.Client.Feature.Transfer.Received
+@code{
+
+    [Parameter]
+    public string TypeReceived { get; set; }
+
+    [Parameter]
+    public string PathApiTransferQrCodeReceived { get; set; }
+    [Parameter]
+    public string PathApiTransferValidTransfer { get; set; }
+    [Parameter]
+    public string TxtAmountToSend { get; set; }
+    [Parameter]
+    public string BtnValidTransaction { get; set; }
+    [Parameter]
+    public string TxtUser { get; set; }
+
+}
+
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <div class="card p-3">
+            @if (Page == 1)
+            {
+                <ReceiveTypeQrCode PathApiTransferQrCodeReceived="@PathApiTransferQrCodeReceived" 
+                                   PathApiTransferValidTransfer="@PathApiTransferValidTransfer"
+                                      TxtAmountToSend="@TxtAmountToSend"
+                                       BtnValidTransaction="@BtnValidTransaction"
+                                       TxtUser="@TxtUser"></ReceiveTypeQrCode>
+            }
+
+        </div>
+    </div>
+</div>

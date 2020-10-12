@@ -53,15 +53,17 @@ namespace Cryptocoin.Client.Feature.Transfer.Sent
         {
             Page = 4;
             Loading = true;
-            TransferSentViewModel x = new TransferSentViewModel
+            TransferSentViewModel model = new TransferSentViewModel
             {
-                AmountToSend = 123,
+                AmountToSend = AmountToSend,
                 IdPays = 2,
-                SenderEmail = "okk@free.fr",
-                SenderName = "tot"
+                Email = "okk@free.fr",
+                Firstname = "tot",
+                Lastname = "tititi",
+                SelectedContact = SelectedContact
             };
-            var response = await HttpClient.PostAsJsonAsync(PathApiValidTransfer, x);
-            if (response.EnsureSuccessStatusCode().StatusCode == System.Net.HttpStatusCode.OK)
+            var response = await HttpClient.PostAsJsonAsync(PathApiValidTransfer, model);
+            if (response.IsSuccessStatusCode)
             {
                 MessageValidatedTransfer = await response.Content.ReadAsStringAsync();
                 Loading = false;

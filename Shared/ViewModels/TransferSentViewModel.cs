@@ -8,13 +8,17 @@ namespace Cryptocoin.Shared
 {
     public class TransferSentViewModel
     {
-        [Required]
+
         public int AmountToSend { get; set; } = 0;
-        [Required]
+
         public int IdPays { get; set; }
-        [Required]
-        public string SenderName { get; set; }
-        [Required]
-        public string SenderEmail { get; set; }
+
+        public string Firstname { get; set; }
+
+        public string Lastname { get; set; }
+
+        public string Email { get; set; }
+
+        public Contact SelectedContact { get; set; }
     }
 }

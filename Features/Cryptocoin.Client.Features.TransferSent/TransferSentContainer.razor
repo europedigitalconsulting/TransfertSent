@@ -1,5 +1,4 @@
-﻿@page "/TransferSent"
-@namespace Cryptocoin.Client.Feature.Transfer.Sent
+﻿@namespace Cryptocoin.Client.Feature.Transfer.Sent
 @code{
 
     #region Loading
@@ -42,7 +41,9 @@
     [Parameter]
     public string TxtInviteUseApplication { get; set; }
     [Parameter]
-    public string TxtPlaceholderNameSender { get; set; }
+    public string TxtPlaceholderLastnameSender { get; set; }
+    [Parameter]
+    public string TxtPlaceholderFirstnameSender { get; set; }
     [Parameter]
     public string TxtPlaceholderMailSender { get; set; }
     [Parameter]
@@ -183,7 +184,8 @@ else
                                               BtnConfirmSend="@BtnConfirmSend"
                                               TxtInviteUseApplication="@TxtInviteUseApplication"
                                               BtnReturnDashboard="@BtnReturnDashboard"
-                                              TxtPlaceholderNameSender="@TxtPlaceholderNameSender"
+                                              TxtPlaceholderLastnameSender="@TxtPlaceholderLastnameSender"
+                                              TxtPlaceholderFirstnameSender="@TxtPlaceholderFirstnameSender"
                                               TxtPlaceholderMailSender="@TxtPlaceholderMailSender"
                                               TxtRefDestinationGTW="@TxtRefDestinationGTW"
                                               TxtCountryNotDestinationList="@TxtCountryNotDestinationList"

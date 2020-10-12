@@ -61,8 +61,8 @@ namespace Cryptocoin.Client.Feature.Transfer.Sent
         }
         protected async Task InviteUser()
         {
-            var response = await HttpClient.GetAsync(PathApiSendEmailInviteUser + TransferSentViewModel.SenderEmail, HttpCompletionOption.ResponseContentRead);
-            if (response.EnsureSuccessStatusCode().StatusCode == System.Net.HttpStatusCode.OK)
+            var response = await HttpClient.GetAsync(PathApiSendEmailInviteUser + TransferSentViewModel.Email, HttpCompletionOption.ResponseContentRead);
+            if (response.IsSuccessStatusCode)
             {
                 NavigationManager.NavigateTo("/");
             }
@@ -73,7 +73,7 @@ namespace Cryptocoin.Client.Feature.Transfer.Sent
             Etape = 3;
 
             var response = await HttpClient.PostAsJsonAsync(PathApiGenerateRefCode, TransferSentViewModel);
-            if (response.EnsureSuccessStatusCode().StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.IsSuccessStatusCode)
             {
                 CodeRef = await response.Content.ReadAsStringAsync();
             }

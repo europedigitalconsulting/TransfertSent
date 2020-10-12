@@ -13,7 +13,9 @@
     [Parameter]
     public string BtnReturnDashboard { get; set; }
     [Parameter]
-    public string TxtPlaceholderNameSender { get; set; }
+    public string TxtPlaceholderLastnameSender { get; set; }
+    [Parameter]
+    public string TxtPlaceholderFirstnameSender { get; set; }
     [Parameter]
     public string TxtPlaceholderMailSender { get; set; }
     [Parameter]
@@ -59,8 +61,9 @@
                 <small id="paysHelp" class="mb-3 form-text text-muted">
                     @TxtCountryNotDestinationList
                 </small>
-                <input class="form-control mb-3 col-lg-12 " @bind-value="@TransferSentViewModel.SenderName" type="text" placeholder="@TxtPlaceholderNameSender" />
-                <input class="form-control mb-3 col-lg-12 " @bind-value="@TransferSentViewModel.SenderEmail" type="text" placeholder="@TxtPlaceholderMailSender" />
+                <input class="form-control mb-3 col-lg-12 " @bind-value="@TransferSentViewModel.Firstname" type="text" placeholder="@TxtPlaceholderFirstnameSender" />
+                <input class="form-control mb-3 col-lg-12 " @bind-value="@TransferSentViewModel.Lastname" type="text" placeholder="@TxtPlaceholderLastnameSender" />
+                <input class="form-control mb-3 col-lg-12 " @bind-value="@TransferSentViewModel.Email" type="text" placeholder="@TxtPlaceholderMailSender" />
                 <br />
                 <button type="submit" class="btn btn-primary col-lg-4">@BtnSend</button>
                 <button @onclick="(() => ClickCancel.InvokeAsync(true))" class="btn btn-danger">@BtnCancel</button>
@@ -73,8 +76,8 @@
         <ul>
             <li>@Amount</li>
             <li>@ListPays.FirstOrDefault(x => x.Value == TransferSentViewModel.IdPays.ToString())?.Text</li>
-            <li>@TransferSentViewModel.SenderName</li>
-            <li>@TransferSentViewModel.SenderEmail</li>
+            <li>@TransferSentViewModel.Firstname</li>
+            <li>@TransferSentViewModel.Email</li>
         </ul>
         @if (Etape == 2)
         {
@@ -86,7 +89,7 @@
         @if (Loading)
         {
             <p class="mt-3">@TxtGenerateCodeRef </p>
-            <Loading_Component Loading="Loading"></Loading_Component>
+            <Loading Load="Loading"></Loading>
         }
         else if (Etape == 3 && !Loading)
         {

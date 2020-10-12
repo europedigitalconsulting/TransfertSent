@@ -1,0 +1,31 @@
+﻿@namespace Cryptocoin.Client.Feature.Transfer.Received
+@code{
+
+    [Parameter]
+    public string PathApiTransferQrCodeReceived { get; set; }
+    [Parameter]
+    public string PathApiTransferValidTransfer { get; set; }
+    [Parameter]
+    public string TxtAmountToSend { get; set; }
+    [Parameter]
+    public string BtnValidTransaction { get; set; }
+    [Parameter]
+    public string TxtUser { get; set; }
+}
+
+<div class="card-body">
+
+    @if (Loading)
+    {
+        <Loading Load="Loading"></Loading>
+    }
+    else
+    {
+        <ul>
+            <li>@TxtUser @Model?.Firstname @Model?.Lastname</li>
+            <li>@TxtAmountToSend @Model?.AmountToSend</li>
+        </ul>
+        <button @onclick="ValidTransact" class="btn btn-primary">@BtnValidTransaction</button>
+    }
+
+</div>

@@ -1,5 +1,6 @@
 ﻿using Cryptocoin.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using QRCoder;
 using System;
 using System.Threading.Tasks;
@@ -21,13 +22,13 @@ namespace Cryptocoin.Server.Controllers
         [HttpPost("ValidTransferFriend")]
         public async Task<ActionResult<string>> ValidTransferFriend(TransferSentViewModel model)
         {
-            await Task.Delay(1500);
+            await Task.Delay(500);
             return Ok("Transfert réussi !");
         }
         [HttpPost("ValidTransferPhysical")]
         public async Task<ActionResult<string>> ValidTransferPhysical(TransferSentViewModel model)
         {
-            await Task.Delay(1500);
+            await Task.Delay(500);
             return Ok(Guid.NewGuid().ToString());
         }
     }

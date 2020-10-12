@@ -17,7 +17,7 @@
             <TransferSentContainer ListPays="@ListPays"
                                    ListContact="@ListContact"
                                    PathApiValidTransfer="/api/TransferSent/ValidTransferFriend"
-                                   PathApiInitQrCode="/api/QrCodeGenerator?link="
+                                   PathApiInitQrCode="/api/QrCodeGenerator/GenerateForTransfer/"
                                    PathApiGenerateRefCode="/api/TransferSent/ValidTransferPhysical"
                                    PathApiSendEmailInviteUser="/api/TransferSent/InviteUser/"
                                    LabelSelectTypeFriend=@Loc["LabelSelectTypeFriend"]
@@ -45,7 +45,8 @@
                                    TxtAmountToTokens=@Loc["TxtAmountToTokens"]
                                    TxtTransferInProgress=@Loc["TxtTransferInProgress"]
                                    TxtInviteUseApplication=@Loc["TxtInviteUseApplication"]
-                                   TxtPlaceholderNameSender=@Loc["TxtPlaceholderNameSender"]
+                                   TxtPlaceholderLastnameSender=@Loc["TxtPlaceholderLastnameSender"]
+                                   TxtPlaceholderFirstnameSender=@Loc["TxtPlaceholderFirstnameSender"]
                                    TxtPlaceholderMailSender=@Loc["TxtPlaceholderMailSender"]
                                    TxtRefDestinationGTW=@Loc["TxtRefDestinationGTW"]
                                    TxtCountryNotDestinationList=@Loc["TxtCountryNotDestinationList"]
