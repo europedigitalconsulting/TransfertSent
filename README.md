@@ -1,6 +1,6 @@
 # Transfert
 
-Pages Front et Appel API inclus dans se Repo
+Pages Front et Appel API inclus dans ce Repo
 
 1. Copier les dossiers dans le projet
 2. Créer un nouveau dossier de solution  "TransferSent" et "TransferReceived" dans Front->Features
