@@ -1,7 +1,6 @@
 ﻿using Cryptocoin.Shared;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
-using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Cryptocoin.Client.Feature.Transfer.Sent
+namespace Cryptocoin.Client.Features.Transfer.Sent
 {
     public partial class TransferTypeUser : ComponentBase
     {

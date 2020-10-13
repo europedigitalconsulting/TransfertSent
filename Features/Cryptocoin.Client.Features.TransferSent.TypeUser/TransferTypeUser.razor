@@ -1,9 +1,12 @@
-﻿@namespace Cryptocoin.Client.Feature.Transfer.Sent
+﻿@namespace Cryptocoin.Client.Features.Transfer.Sent
 @code{
     [Parameter]
     public string TxtGenerateQrcode { get; set; }
+
     [Parameter]
     public string PathApiInitQrCode { get; set; }
+    [Parameter]
+    public string PathApiSendEmailInviteUser { get; set; }
     [Parameter]
     public string TransferTypeUserPanelTitle { get; set; }
     [Parameter]

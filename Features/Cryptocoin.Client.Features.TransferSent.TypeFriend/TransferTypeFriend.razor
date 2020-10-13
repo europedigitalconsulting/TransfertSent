@@ -1,4 +1,4 @@
-﻿@namespace Cryptocoin.Client.Feature.Transfer.Sent
+﻿@namespace Cryptocoin.Client.Features.Transfer.Sent
 @code{
     [Parameter]
     public string TransferTypeFriendPanelTitle { get; set; }
@@ -59,7 +59,7 @@
     }
     else if (Page == 2)
     {
-        <ContactList_Component TxtSelectContact="@TxtSelectContact" ContactListPanelTitle="@ContactListPanelTitle" BtnSearch="@BtnSearch" ListContact="ListContact" SetSelectedContact="GetContactSelected"></ContactList_Component>
+        <ContactList TxtSelectContact="@TxtSelectContact" ContactListPanelTitle="@ContactListPanelTitle" BtnSearch="@BtnSearch" ListContact="ListContact" SetSelectedContact="GetContactSelected"></ContactList>
     }
     else if (Page == 3 || Page == 4)
     {
@@ -70,7 +70,7 @@
 
         if (Page == 4)
         {
-            <Loading_Component Loading="Loading" />
+            <Loading Load="Loading" />
             @if (!Loading)
             {
                 <strong>@MessageValidatedTransfer </strong>

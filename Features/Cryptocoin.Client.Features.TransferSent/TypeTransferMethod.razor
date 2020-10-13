@@ -1,0 +1,38 @@
+﻿@namespace Cryptocoin.Client.Features.Transfer.Sent
+@code {
+    [Parameter]
+    public TransferSentContainer Container { get; set; }
+    [Parameter]
+    public List<TypeTransferMethod> TypeTransferMethods { get; set; }
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string Description { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    internal void AddPaymentMethod()
+    {
+        if (TypeTransferMethods == null)
+            TypeTransferMethods = new List<TypeTransferMethod>();
+
+        TypeTransferMethods.Add(this);
+    }
+    public void DisplayTypeTransferMethod()
+    {
+        Container?.SetActivateTypeTransfer(this);
+    }
+
+}
+<div class="card col-4">
+    <div class="card-header">
+        <h3 class="section-title m-0">@Title</h3>
+    </div>
+    <div class="p-1">
+        <p class="mb-2">@Description</p>
+        <div class="text-center">
+            <button class="btn btn-primary" @onclick="DisplayTypeTransferMethod">Selectionner</button>
+        </div>
+    </div>
+</div>

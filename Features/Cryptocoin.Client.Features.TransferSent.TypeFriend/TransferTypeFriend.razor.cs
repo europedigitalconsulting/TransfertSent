@@ -9,11 +9,10 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 
-namespace Cryptocoin.Client.Feature.Transfer.Sent
+namespace Cryptocoin.Client.Features.Transfer.Sent
 {
     public partial class TransferTypeFriend : ComponentBase
     {
-        [Required]
         private int AmountToSend { get; set; } = 0;
         protected int Amount
         {

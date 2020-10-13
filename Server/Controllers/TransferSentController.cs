@@ -22,13 +22,13 @@ namespace Cryptocoin.Server.Controllers
         [HttpPost("ValidTransferFriend")]
         public async Task<ActionResult<string>> ValidTransferFriend(TransferSentViewModel model)
         {
-            await Task.Delay(500);
+            await Task.Delay(100);
             return Ok("Transfert réussi !");
         }
         [HttpPost("ValidTransferPhysical")]
         public async Task<ActionResult<string>> ValidTransferPhysical(TransferSentViewModel model)
         {
-            await Task.Delay(500);
+            await Task.Delay(100);
             return Ok(Guid.NewGuid().ToString());
         }
     }

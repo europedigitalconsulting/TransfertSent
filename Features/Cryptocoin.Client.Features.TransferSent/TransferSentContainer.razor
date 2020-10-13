@@ -1,205 +1,27 @@
-﻿@namespace Cryptocoin.Client.Feature.Transfer.Sent
+﻿@namespace Cryptocoin.Client.Features.Transfer.Sent
 @code{
 
-    #region Loading
-    [Parameter]
-    public string TxtGenerateQrcode { get; set; }
-    #endregion
-    #region ContactList
-    [Parameter]
-    public string BtnSearch { get; set; }
-    [Parameter]
-    public string ContactListPanelTitle { get; set; }
-    [Parameter]
-    public string TxtSelectContact { get; set; }
-    #endregion
-    #region TransferTypeFriend
-    [Parameter]
-    public string TransferTypeFriendPanelTitle { get; set; }
-    [Parameter]
-    public string TxtTransferInProgress { get; set; }
-    [Parameter]
-    public string LabelNumberOfTokensToSend { get; set; }
-    [Parameter]
-    public string BtnSelectSender { get; set; }
-    [Parameter]
-    public string BtnConfirmTransfer { get; set; }
-    [Parameter]
-    public string BtnReturnDashboard { get; set; }
-    [Parameter]
-    public string TxtYouHaveSelected { get; set; }
-    [Parameter]
-    public string TxtAmountToTokens { get; set; }
-    [Parameter]
-    public string TxtTransferFinish { get; set; }
-    #endregion
-    #region TransferTypePhysical
-    [Parameter]
-    public string TransferTypePhysicalPanelTitle { get; set; }
-    [Parameter]
-    public string BtnConfirmSend { get; set; }
-    [Parameter]
-    public string TxtInviteUseApplication { get; set; }
-    [Parameter]
-    public string TxtPlaceholderLastnameSender { get; set; }
-    [Parameter]
-    public string TxtPlaceholderFirstnameSender { get; set; }
-    [Parameter]
-    public string TxtPlaceholderMailSender { get; set; }
-    [Parameter]
-    public string TxtRefDestinationGTW { get; set; }
-    [Parameter]
-    public string TxtCountryNotDestinationList { get; set; }
-    [Parameter]
-    public string TxtDescFormTransferPhysical { get; set; }
-    [Parameter]
-    public string TxtGenerateCodeRef { get; set; }
-    [Parameter]
-    public string PathApiGenerateRefCode { get; set; }
+    [Parameter] public string DescComponent { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public TypeTransferMethod TypeTransferMethodSelected { get; set; }
 
-    #endregion
-    #region TransferTypeUser
-    [Parameter]
-    public string BtnWaitingForPayment { get; set; }
-    [Parameter]
-    public int WidthQrCode { get; set; }
-    [Parameter]
-    public int HeightQrCode { get; set; }
-    [Parameter]
-    public string TransferTypeUserPanelTitle { get; set; }
-    [Parameter]
-    public string BtnSend { get; set; }
-    [Parameter]
-    public string TxtAwaitingPayment { get; set; }
-    #endregion
-
-    [Parameter]
-    public IReadOnlyList<Contact> ListContact { get; set; }
-    [Parameter]
-    public IReadOnlyList<SelectListItem> ListPays { get; set; }
-    [Parameter]
-    public string PathApiValidTransfer { get; set; }
-    [Parameter]
-    public string PathApiInitQrCode { get; set; }
-    [Parameter]
-    public string PathApiSendEmailInviteUser { get; set; }
-    [Parameter]
-    public string LabelSelectTypeFriend { get; set; }
-    [Parameter]
-    public string LabelSelectTypeUser { get; set; }
-    [Parameter]
-    public string LabelSelectTypePhysical { get; set; }
-
-    [Parameter]
-    public string CssClassDropDownListTypeTransfer { get; set; }
-    [Parameter]
-    public string CssClassDisplayComponentTypeTransfer { get; set; }
-    [Parameter]
-    public string LabelDropDownListTypeTransfer { get; set; }
-    [Parameter]
-    public string BtnCancel { get; set; }
-    [Parameter]
-    public string BtnValid { get; set; }
-
-    [Parameter]
-    public int AmountInStock { get; set; }
-
-
-    [Parameter]
-    public RenderFragment Header { get; set; }
-    [Parameter]
-    public RenderFragment Footer { get; set; }
+    public void SetActivateTypeTransfer(TypeTransferMethod typeTransferMethod)
+    {
+        TypeTransferMethodSelected = typeTransferMethod;
+        StateHasChanged();
+    }
 }
-@Header
 
-@if (SelectedTypeTransfer == 0)
+<p class="section-lead">@DescComponent</p>
+
+@if (TypeTransferMethodSelected == null)
 {
-    <div class="row mb-4">
-        <div class="col-lg-12">
-            <div class="card p-3 @CssClassDropDownListTypeTransfer">
-                <div class="form-group ">
-                    <div class="card-header">
-                        <h4>@LabelDropDownListTypeTransfer</h4>
-                    </div>
-                    <div class="card-body">
-                        <select class="form-control col-lg-8" @onchange="SelectTypeTransfer">
-                            @foreach (var type in ListTypeTransfer)
-                            {
-                                <option value="@type.Value">@type.Text</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row">
+        @ChildContent
     </div>
 }
 else
 {
-    <div class="row mb-4">
-        <div class="col-lg-12">
-            <div class="card @CssClassDisplayComponentTypeTransfer">
-                @switch (SelectedTypeTransfer)
-                {
-                    case (int)EnumTransfer.TYPE_FRIEND:
-                        <TransferTypeFriend ListContact="@ListContact"
-                                            ClickCancel="ClickCancelHandler"
-                                            TransferTypeFriendPanelTitle="@TransferTypeFriendPanelTitle"
-                                            TxtTransferInProgress="@TxtTransferInProgress"
-                                            LabelNumberOfTokensToSend="@LabelNumberOfTokensToSend"
-                                            BtnSelectSender="@BtnSelectSender"
-                                            BtnCancel="@BtnCancel"
-                                            BtnValid="@BtnValid"
-                                            BtnSearch="@BtnSearch"
-                                            ContactListPanelTitle="@ContactListPanelTitle"
-                                            BtnConfirmTransfer="@BtnConfirmTransfer"
-                                            TxtYouHaveSelected="@TxtYouHaveSelected"
-                                            TxtAmountToTokens="@TxtAmountToTokens"
-                                            BtnReturnDashboard="@BtnReturnDashboard"
-                                            PathApiValidTransfer="@PathApiValidTransfer"
-                                            TxtSelectContact="@TxtSelectContact"
-                                            AmountInStock="@AmountInStock">
-                        </TransferTypeFriend>
-                        break;
-                    case (int)EnumTransfer.TYPE_USER:
-                        <TransferTypeUser TransferTypeUserPanelTitle="@TransferTypeUserPanelTitle"
-                                          LabelNumberOfTokensToSend="@LabelNumberOfTokensToSend"
-                                          BtnCancel="@BtnCancel"
-                                          BtnWaitingForPayment="@BtnWaitingForPayment"
-                                          WidthQrCode="@WidthQrCode"
-                                          HeightQrCode="@HeightQrCode"
-                                          ClickCancel="ClickCancelHandler"
-                                          AmountInStock="@AmountInStock"
-                                          TxtAwaitingPayment="@TxtAwaitingPayment"
-                                          PathApiInitQrCode="@PathApiInitQrCode"
-                                          TxtGenerateQrcode="@TxtGenerateQrcode">
-                        </TransferTypeUser>
-                        break;
-                    case (int)EnumTransfer.TYPE_PHYSICAL:
-                        <TransferTypePhysical ListPays="ListPays"
-                                              ClickCancel="ClickCancelHandler"
-                                              TransferTypePhysicalPanelTitle="@TransferTypePhysicalPanelTitle"
-                                              BtnCancel="@BtnCancel"
-                                              BtnSend="@BtnSend"
-                                              BtnConfirmSend="@BtnConfirmSend"
-                                              TxtInviteUseApplication="@TxtInviteUseApplication"
-                                              BtnReturnDashboard="@BtnReturnDashboard"
-                                              TxtPlaceholderLastnameSender="@TxtPlaceholderLastnameSender"
-                                              TxtPlaceholderFirstnameSender="@TxtPlaceholderFirstnameSender"
-                                              TxtPlaceholderMailSender="@TxtPlaceholderMailSender"
-                                              TxtRefDestinationGTW="@TxtRefDestinationGTW"
-                                              TxtCountryNotDestinationList="@TxtCountryNotDestinationList"
-                                              TxtDescFormTransferPhysical="@TxtDescFormTransferPhysical"
-                                              TxtGenerateCodeRef="@TxtGenerateCodeRef"
-                                              PathApiGenerateRefCode="@PathApiGenerateRefCode"
-                                              PathApiSendEmailInviteUser="@PathApiSendEmailInviteUser"
-                                              AmountInStock="@AmountInStock">
-                        </TransferTypePhysical>
-                        break;
-                }
-            </div>
-        </div>
-    </div>
+    @TypeTransferMethodSelected?.ChildContent
 }
 
-@Footer

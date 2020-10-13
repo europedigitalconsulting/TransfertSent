@@ -150,6 +150,11 @@
   <data name="CssClassDisplayComponentTypeTransfer" xml:space="preserve">
     <value />
   </data>
+  <data name="DescComponent" xml:space="preserve">
+    <value>Equitis Romani autem esse filium criminis loco poni ab accusatoribus neque his iudicantibus oportuit neque defendentibus nobis. Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed iudicium certe parentis; quid nos opinemur, audietis ex iuratis; quid parentes sentiant, lacrimae matris incredibilisque maeror, squalor patris et haec praesens maestitia, quam cernitis, luctusque declarat.
+
+Sed ut tum ad senem senex de senectute, sic hoc l</value>
+  </data>
   <data name="LabelDropDownListTypeTransfer" xml:space="preserve">
     <value>Transférer un virement permet à un client de transférer une somme en jetons à</value>
   </data>
@@ -163,7 +168,7 @@
     <value>Une personne physique</value>
   </data>
   <data name="LabelSelectTypeUser" xml:space="preserve">
-    <value>Un utilisateur (Toute personne disposant de l’application mais n’appartenant pas encore à sa liste des contacts)</value>
+    <value>Un utilisateur</value>
   </data>
   <data name="TitlePage" xml:space="preserve">
     <value>Transférer un virement</value>
@@ -191,6 +196,15 @@
   </data>
   <data name="TxtDescFormTransferPhysical" xml:space="preserve">
     <value>Vous souhaitez envoyer à une personne physique veuillez tout d’abord remplir le formulaire ci-dessous</value>
+  </data>
+  <data name="TxtDescTypeFriend" xml:space="preserve">
+    <value>Toute personne dans la sa liste de contact</value>
+  </data>
+  <data name="TxtDescTypePhysical" xml:space="preserve">
+    <value>A saisir</value>
+  </data>
+  <data name="TxtDescTypeUser" xml:space="preserve">
+    <value>Toute personne disposant de l’application mais n’appartenant pas encore à sa liste des contacts</value>
   </data>
   <data name="TxtGenerateCodeRef" xml:space="preserve">
     <value>Génération du code de référence...</value>

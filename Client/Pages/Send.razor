@@ -1,6 +1,5 @@
 ﻿@page "/send"
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Send> Loc
-@using Cryptocoin.Client.Feature.Transfer.Sent
 @namespace Cryptocoin.Client.Pages
 
 <div class="main-content">
@@ -14,56 +13,83 @@
             </div>
         </div>
         <div class="section-body">
-            <TransferSentContainer ListPays="@ListPays"
-                                   ListContact="@ListContact"
-                                   PathApiValidTransfer="/api/TransferSent/ValidTransferFriend"
-                                   PathApiInitQrCode="/api/QrCodeGenerator/GenerateForTransfer/"
-                                   PathApiGenerateRefCode="/api/TransferSent/ValidTransferPhysical"
-                                   PathApiSendEmailInviteUser="/api/TransferSent/InviteUser/"
-                                   LabelSelectTypeFriend=@Loc["LabelSelectTypeFriend"]
-                                   LabelSelectTypeUser=@Loc["LabelSelectTypeUser"]
-                                   LabelSelectTypePhysical=@Loc["LabelSelectTypePhysical"]
-                                   CssClassDropDownListTypeTransfer=@Loc["CssClassDropDownListTypeTransfer"]
-                                   CssClassDisplayComponentTypeTransfer=@Loc["CssClassDisplayComponentTypeTransfer"]
-                                   LabelDropDownListTypeTransfer=@Loc["LabelDropDownListTypeTransfer"]
-                                   BtnCancel=@Loc["BtnCancel"]
-                                   BtnValid=@Loc["BtnValid"]
-                                   BtnSend=@Loc["BtnSend"]
-                                   BtnConfirmSend=@Loc["BtnConfirmSend"]
-                                   BtnReturnDashboard=@Loc["BtnReturnDashboard"]
-                                   BtnWaitingForPayment=@Loc["BtnWaitingForPayment"]
-                                   BtnConfirmTransfer=@Loc["BtnConfirmTransfer"]
-                                   BtnSelectSender=@Loc["BtnSelectSender"]
-                                   BtnSearch=@Loc["BtnSearch"]
-                                   ContactListPanelTitle=@Loc["ContactListPanelTitle"]
-                                   TransferTypeFriendPanelTitle=@Loc["TransferTypeFriendPanelTitle"]
-                                   TransferTypeUserPanelTitle=@Loc["TransferTypeUserPanelTitle"]
-                                   TransferTypePhysicalPanelTitle=@Loc["TransferTypePhysicalPanelTitle"]
-                                   LabelNumberOfTokensToSend=@Loc["LabelNumberOfTokensToSend"]
-                                   TxtYouHaveSelected=@Loc["TxtYouHaveSelected"]
-                                   TxtDescFormTransferPhysical=@Loc["TxtDescFormTransferPhysical"]
-                                   TxtAmountToTokens=@Loc["TxtAmountToTokens"]
-                                   TxtTransferInProgress=@Loc["TxtTransferInProgress"]
-                                   TxtInviteUseApplication=@Loc["TxtInviteUseApplication"]
-                                   TxtPlaceholderLastnameSender=@Loc["TxtPlaceholderLastnameSender"]
-                                   TxtPlaceholderFirstnameSender=@Loc["TxtPlaceholderFirstnameSender"]
-                                   TxtPlaceholderMailSender=@Loc["TxtPlaceholderMailSender"]
-                                   TxtRefDestinationGTW=@Loc["TxtRefDestinationGTW"]
-                                   TxtCountryNotDestinationList=@Loc["TxtCountryNotDestinationList"]
-                                   TxtGenerateQrcode=@Loc["TxtGenerateQrcode"]
-                                   TxtAwaitingPayment=@Loc["TxtAwaitingPayment"]
-                                   TxtSelectContact=@Loc["TxtSelectContact"]
-                                   TxtGenerateCodeRef=@Loc["TxtGenerateCodeRef"]
-                                   WidthQrCode="200"
-                                   HeightQrCode="200"
-                                   AmountInStock="3000">
+            <TransferSentContainer @ref="container"  DescComponent="@Loc["DescComponent"]">
+
+                <TypeTransferMethod Container="container" Name="TypeFriend" Title="@Loc["LabelSelectTypeFriend"]" Description="@Loc["TxtDescTypeFriend"]">
+                    <TransferTypeFriend @ref="TransferTypeFriend" ListContact="@ListContact"
+                                        ClickCancel="ClickCancelHandler"
+                                        TransferTypeFriendPanelTitle=@Loc["TransferTypeFriendPanelTitle"]
+                                        TxtTransferInProgress=@Loc["TxtTransferInProgress"]
+                                        LabelNumberOfTokensToSend=@Loc["LabelNumberOfTokensToSend"]
+                                        BtnSelectSender=@Loc["BtnSelectSender"]
+                                        BtnCancel=@Loc["BtnCancel"]
+                                        BtnValid=@Loc["BtnValid"]
+                                        BtnSearch=@Loc["BtnSearch"]
+                                        ContactListPanelTitle=@Loc["ContactListPanelTitle"]
+                                        BtnConfirmTransfer=@Loc["BtnConfirmTransfer"]
+                                        TxtYouHaveSelected=@Loc["TxtYouHaveSelected"]
+                                        TxtAmountToTokens=@Loc["TxtAmountToTokens"]
+                                        BtnReturnDashboard=@Loc["BtnReturnDashboard"]
+                                        PathApiValidTransfer="/api/TransferSent/ValidTransferFriend"
+                                        TxtSelectContact=@Loc["TxtSelectContact"]
+                                        AmountInStock=5000>
+                    </TransferTypeFriend>
+                </TypeTransferMethod>
+                <TypeTransferMethod Container="container" Name="TypeUser" Title="@Loc["LabelSelectTypeUser"]" Description="@Loc["TxtDescTypeUser"]">
+                    <TransferTypeUser @ref="TransferTypeUser" TransferTypeUserPanelTitle=@Loc["TransferTypeUserPanelTitle"]
+                                      LabelNumberOfTokensToSend=@Loc["LabelNumberOfTokensToSend"]
+                                      BtnCancel=@Loc["BtnCancel"]
+                                      BtnWaitingForPayment=@Loc["BtnWaitingForPayment"]
+                                      WidthQrCode=200
+                                      HeightQrCode=200
+                                      ClickCancel="ClickCancelHandler"
+                                      AmountInStock=5000
+                                      TxtAwaitingPayment=@Loc["TxtAwaitingPayment"]
+                                      PathApiInitQrCode=/api/QrCodeGenerator/GenerateForTransfer/
+                                      TxtGenerateQrcode=@Loc["TxtGenerateQrcode"]>
+                    </TransferTypeUser>
+                </TypeTransferMethod>
+                <TypeTransferMethod Container="container" Name="TypePhysical" Title="@Loc["LabelSelectTypePhysical"]" Description="@Loc["TxtDescTypePhysical"]">
+                    <TransferTypePhysical @ref="TransferTypePhysical" ListPays="ListPays"
+                                          ClickCancel="ClickCancelHandler"
+                                          TransferTypePhysicalPanelTitle=@Loc["TransferTypePhysicalPanelTitle"]
+                                          BtnCancel=@Loc["BtnCancel"]
+                                          BtnSend=@Loc["BtnSend"]
+                                          BtnConfirmSend=@Loc["BtnConfirmSend"]
+                                          TxtInviteUseApplication=@Loc["TxtInviteUseApplication"]
+                                          BtnReturnDashboard=@Loc["BtnReturnDashboard"]
+                                          TxtPlaceholderLastnameSender=@Loc["TxtPlaceholderLastnameSender"]
+                                          TxtPlaceholderFirstnameSender=@Loc["TxtPlaceholderFirstnameSender"]
+                                          TxtPlaceholderMailSender=@Loc["@TxtPlaceholderMailSender"]
+                                          TxtRefDestinationGTW=@Loc["TxtRefDestinationGTW"]
+                                          TxtCountryNotDestinationList=@Loc["TxtCountryNotDestinationList"]
+                                          TxtDescFormTransferPhysical=@Loc["TxtDescFormTransferPhysical"]
+                                          TxtGenerateCodeRef=@Loc["TxtGenerateCodeRef"]
+                                          PathApiGenerateRefCode="/api/TransferSent/ValidTransferPhysical"
+                                          PathApiSendEmailInviteUser="/api/TransferSent/InviteUser/"
+                                          AmountInStock=4000>
+                    </TransferTypePhysical>
+                </TypeTransferMethod>
             </TransferSentContainer>
         </div>
     </section>
 </div>
 @code{
+    private TransferSentContainer container;
+    private TransferTypeFriend TransferTypeFriend;
+    private TransferTypeUser TransferTypeUser;
+    private TransferTypePhysical TransferTypePhysical;
     protected List<Contact> ListContact { get; set; } = new List<Contact>();
     protected List<SelectListItem> ListPays { get; set; } = new List<SelectListItem>();
+
+    protected void ClickCancelHandler(bool IsCancel)
+    {
+        if (IsCancel)
+        {
+            container.SetActivateTypeTransfer(null);
+            StateHasChanged();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
