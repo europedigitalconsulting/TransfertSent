@@ -1,4 +1,5 @@
 ﻿using Cryptocoin.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using QRCoder;
@@ -9,6 +10,7 @@ namespace Cryptocoin.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransferSentController : ControllerBase
     {
         [HttpGet("InviteUser/{email}")]

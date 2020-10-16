@@ -46,7 +46,7 @@ namespace Cryptocoin.Client.Features.Transfer.Sent
         protected string CodeRef { get; set; }
 
         protected override async Task OnInitializedAsync()
-        {
+        { 
             TransferSentViewModel = new TransferSentViewModel();
         }
 

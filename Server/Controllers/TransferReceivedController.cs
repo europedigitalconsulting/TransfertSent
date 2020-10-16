@@ -1,4 +1,5 @@
 ﻿using Cryptocoin.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using QRCoder;
@@ -9,6 +10,7 @@ namespace Cryptocoin.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransferReceivedController : ControllerBase
     {
         public string key = "E546C8DF278CD5931069B522E695D4F2";

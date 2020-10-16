@@ -14,6 +14,6 @@ Pages Front et Appel API inclus dans ce Repo
 4. Dans le projet Cryptocoin.client ajouter la référence de projet Cryptocoin.Client.Features.TransferSent.TypeUser
 4. Dans le projet Cryptocoin.client ajouter la référence de projet Cryptocoin.Client.Features.TransferSent.TypePhysical 
 4. Dans le projet Cryptocoin.client ajouter la référence de projet Cryptocoin.Client.Features.TransferReceived
-5. Installer la package Microsoft.AspNetCore.Mvc.ViewFeatures dans le projet Cryptocoin.Client
-6. Ajouter "@using Microsoft.AspNetCore.Mvc.Rendering" et "@using Cryptocoin.Client.Features.Transfer.Sent"dans le fichier "_import.razor" du projet Cryptocoin.Client
+5. Installer le package Microsoft.AspNetCore.Mvc.ViewFeatures dans le projet Cryptocoin.Client
+6. Ajouter "@using Microsoft.AspNetCore.Mvc.Rendering" et "@using Cryptocoin.Client.Features.Transfer.Sent" dans le fichier "_import.razor" du projet Cryptocoin.Client
 
