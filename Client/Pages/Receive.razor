@@ -1,4 +1,5 @@
 ﻿@page "/receive/{TypeReceived}"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Resources> Loc
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Receive> LocReceive
 @using Cryptocoin.Client.Feature.Transfer.Received
@@ -14,17 +15,43 @@
             </div>
         </div>
         <div class="section-body">
-            <TransferReceivedContainer TypeReceived="@TypeReceived"
-                                       PathApiTransferQrCodeReceived="/api/TransferReceived/QrCodeReceived/"
-                                       PathApiTransferValidTransfer="/api/TransferReceived/ValidTransfer/"
+            <TransferReceivedContainer @ref="Container" TypeReceived="@TypeReceived" Firstname="@TransferSentViewModel.Firstname" Lastname="@TransferSentViewModel.Lastname" AmountToSend="@TransferSentViewModel.AmountToSend" QrCode="QrCode"
                                        TxtAmountToSend="@LocReceive["TxtAmountToSend"]"
                                        BtnValidTransaction="@LocReceive["BtnValidTransaction"]"
-                                       TxtUser="@LocReceive["TxtUser"]">
+                                       TxtUser="@LocReceive["TxtUser"]" ValidTransaction="ValidTransaction">
             </TransferReceivedContainer>
         </div>
     </section>
 </div>
 @code{
-    [Parameter]
-    public string TypeReceived { get; set; }
+    [Parameter] public string TypeReceived { get; set; }
+    [Inject] private HttpClient HttpClient { get; set; }
+    [Inject] private NavigationManager NavManager { get; set; }
+    private TransferReceivedContainer Container;
+    private TransferSentViewModel TransferSentViewModel { get; set; } = new TransferSentViewModel();
+    private string QrCode { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+
+        if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("key", out var param))
+        {
+            QrCode = param.First();
+            var response = await HttpClient.GetAsync("/api/TransferReceived/QrCodeReceived/" + QrCode, HttpCompletionOption.ResponseContentRead);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                TransferSentViewModel = JsonConvert.DeserializeObject<TransferSentViewModel>(result);
+            }
+        }
+    }
+    public async Task ValidTransaction()
+    {
+        var response = await HttpClient.GetAsync("/api/TransferReceived/ValidTransferQrCode/" + QrCode, HttpCompletionOption.ResponseContentRead);
+        if (response.IsSuccessStatusCode)
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
 }

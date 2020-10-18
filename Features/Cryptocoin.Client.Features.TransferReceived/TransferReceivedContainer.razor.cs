@@ -14,11 +14,10 @@ namespace Cryptocoin.Client.Feature.Transfer.Received
 {
     public partial class TransferReceivedContainer : ComponentBase
     {
-        public int Page { get; set; } = 2;
+        public int Page { get; set; } = 0;
 
         protected override async Task OnInitializedAsync()
         {
-            Console.WriteLine(TypeReceived);
             if (TypeReceived == "QrCodeReceived")
             {
                 Page = 1;

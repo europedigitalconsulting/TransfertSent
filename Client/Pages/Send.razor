@@ -1,4 +1,5 @@
-﻿@page "/sent"
+﻿@page "/send"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Send> Loc
 @namespace Cryptocoin.Client.Pages
 
@@ -13,29 +14,28 @@
             </div>
         </div>
         <div class="section-body">
-            <TransferSentContainer @ref="container"  DescComponent="@Loc["DescComponent"]">
+            <TransferSentContainer @ref="Container" DescComponent="@Loc["DescComponent"]">
 
-                <TypeTransferMethod Container="container" Name="TypeFriend" Title="@Loc["LabelSelectTypeFriend"]" Description="@Loc["TxtDescTypeFriend"]">
-                    <TransferTypeFriend @ref="TransferTypeFriend" ListContact="@ListContact"
+                <TypeTransferMethod Container="Container" Name="TypeFriend" Title="@Loc["LabelSelectTypeFriend"]" Description="@Loc["TxtDescTypeFriend"]">
+                    <TransferTypeFriend @ref="TransferTypeFriend" ValidTransfer="ValidTransferTypeFriend" ListContact="@ListContact"
                                         ClickCancel="ClickCancelHandler"
                                         TransferTypeFriendPanelTitle=@Loc["TransferTypeFriendPanelTitle"]
-                                        TxtTransferInProgress=@Loc["TxtTransferInProgress"]
-                                        LabelNumberOfTokensToSend=@Loc["LabelNumberOfTokensToSend"]
+                                        ContactListPanelTitle=@Loc["ContactListPanelTitle"]
                                         BtnSelectSender=@Loc["BtnSelectSender"]
                                         BtnCancel=@Loc["BtnCancel"]
                                         BtnValid=@Loc["BtnValid"]
                                         BtnSearch=@Loc["BtnSearch"]
-                                        ContactListPanelTitle=@Loc["ContactListPanelTitle"]
                                         BtnConfirmTransfer=@Loc["BtnConfirmTransfer"]
+                                        BtnReturnDashboard=@Loc["BtnReturnDashboard"]
                                         TxtYouHaveSelected=@Loc["TxtYouHaveSelected"]
                                         TxtAmountToTokens=@Loc["TxtAmountToTokens"]
-                                        BtnReturnDashboard=@Loc["BtnReturnDashboard"]
-                                        PathApiValidTransfer="/api/TransferSent/ValidTransferFriend"
                                         TxtSelectContact=@Loc["TxtSelectContact"]
+                                        TxtTransferInProgress=@Loc["TxtTransferInProgress"]
+                                        LabelNumberOfTokensToSend=@Loc["LabelNumberOfTokensToSend"] 
                                         AmountInStock=5000>
                     </TransferTypeFriend>
                 </TypeTransferMethod>
-                <TypeTransferMethod Container="container" Name="TypeUser" Title="@Loc["LabelSelectTypeUser"]" Description="@Loc["TxtDescTypeUser"]">
+                <TypeTransferMethod Container="Container" Name="TypeUser" Title="@Loc["LabelSelectTypeUser"]" Description="@Loc["TxtDescTypeUser"]">
                     <TransferTypeUser @ref="TransferTypeUser" TransferTypeUserPanelTitle=@Loc["TransferTypeUserPanelTitle"]
                                       LabelNumberOfTokensToSend=@Loc["LabelNumberOfTokensToSend"]
                                       BtnCancel=@Loc["BtnCancel"]
@@ -43,31 +43,31 @@
                                       WidthQrCode=200
                                       HeightQrCode=200
                                       ClickCancel="ClickCancelHandler"
+                                      ValidTransfer="ValidTransferTypeUser"
                                       AmountInStock=5000
-                                      TxtAwaitingPayment=@Loc["TxtAwaitingPayment"]
-                                      PathApiInitQrCode=/api/QrCodeGenerator/GenerateForTransfer/
+                                      TxtAwaitingPayment=@Loc["TxtAwaitingPayment"] 
                                       TxtGenerateQrcode=@Loc["TxtGenerateQrcode"]>
                     </TransferTypeUser>
                 </TypeTransferMethod>
-                <TypeTransferMethod Container="container" Name="TypePhysical" Title="@Loc["LabelSelectTypePhysical"]" Description="@Loc["TxtDescTypePhysical"]">
+                <TypeTransferMethod Container="Container" Name="TypePhysical" Title="@Loc["LabelSelectTypePhysical"]" Description="@Loc["TxtDescTypePhysical"]">
                     <TransferTypePhysical @ref="TransferTypePhysical" ListPays="ListPays"
                                           ClickCancel="ClickCancelHandler"
+                                          InviteUser="InviteUserTypePhysical"
+                                          ValidTransfer="ValidTransferTypePhysical"
                                           TransferTypePhysicalPanelTitle=@Loc["TransferTypePhysicalPanelTitle"]
                                           BtnCancel=@Loc["BtnCancel"]
                                           BtnSend=@Loc["BtnSend"]
                                           BtnConfirmSend=@Loc["BtnConfirmSend"]
-                                          TxtInviteUseApplication=@Loc["TxtInviteUseApplication"]
                                           BtnReturnDashboard=@Loc["BtnReturnDashboard"]
+                                          TxtInviteUseApplication=@Loc["TxtInviteUseApplication"]
                                           TxtPlaceholderLastnameSender=@Loc["TxtPlaceholderLastnameSender"]
                                           TxtPlaceholderFirstnameSender=@Loc["TxtPlaceholderFirstnameSender"]
-                                          TxtPlaceholderMailSender=@Loc["@TxtPlaceholderMailSender"]
+                                          TxtPlaceholderMailSender=@Loc["TxtPlaceholderMailSender"]
                                           TxtRefDestinationGTW=@Loc["TxtRefDestinationGTW"]
                                           TxtCountryNotDestinationList=@Loc["TxtCountryNotDestinationList"]
                                           TxtDescFormTransferPhysical=@Loc["TxtDescFormTransferPhysical"]
                                           TxtGenerateCodeRef=@Loc["TxtGenerateCodeRef"]
-                                          PathApiGenerateRefCode="/api/TransferSent/ValidTransferPhysical"
-                                          PathApiSendEmailInviteUser="/api/TransferSent/InviteUser/"
-                                          AmountInStock=4000>
+                                          AmountInStock=3000>
                     </TransferTypePhysical>
                 </TypeTransferMethod>
             </TransferSentContainer>
@@ -75,21 +75,15 @@
     </section>
 </div>
 @code{
-    private TransferSentContainer container;
+    private TransferSentContainer Container;
     private TransferTypeFriend TransferTypeFriend;
     private TransferTypeUser TransferTypeUser;
     private TransferTypePhysical TransferTypePhysical;
     protected List<Contact> ListContact { get; set; } = new List<Contact>();
     protected List<SelectListItem> ListPays { get; set; } = new List<SelectListItem>();
 
-    protected void ClickCancelHandler(bool IsCancel)
-    {
-        if (IsCancel)
-        {
-            container.SetActivateTypeTransfer(null);
-            StateHasChanged();
-        }
-    }
+    [Inject] protected HttpClient HttpClient { get; set; }
+    [Inject] protected NavigationManager NavigationManager { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -100,7 +94,73 @@
         ListPays.Add(new SelectListItem { Value = "3", Text = "Liban" });
         ListPays.Add(new SelectListItem { Value = "4", Text = "Chine" });
     }
+    protected void ClickCancelHandler(bool IsCancel)
+    {
+        if (IsCancel)
+        {
+            Container.SetActivateTypeTransfer(null);
+            StateHasChanged();
+        }
+    }
+    protected async Task ValidTransferTypeFriend()
+    {
+        TransferTypeFriend.Loading = true;
+        TransferSentViewModel model = new TransferSentViewModel
+        {
+            AmountToSend = TransferTypeFriend.Amount,
+            SelectedContact = TransferTypeFriend.SelectedContact
+        };
+        var response = await HttpClient.PostAsJsonAsync("/api/TransferSent/ValidTransferFriend", model);
+        if (response.IsSuccessStatusCode)
+        {
+            TransferTypeFriend.MessageValidatedTransfer = await response.Content.ReadAsStringAsync();
+            TransferTypeFriend.Page = 4;
+            TransferTypeFriend.Loading = false;
+        }
+        StateHasChanged();
+    }
+    protected async Task InviteUserTypePhysical()
+    {
+        var response = await HttpClient.GetAsync("/api/TransferSent/InviteUser/" + TransferTypePhysical.Email, HttpCompletionOption.ResponseContentRead);
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+    protected async Task ValidTransferTypePhysical()
+    {
+        TransferTypePhysical.Loading = true;
+        TransferSentViewModel transferSentViewModel = new TransferSentViewModel();
+        transferSentViewModel.Email = TransferTypePhysical.Email;
+        transferSentViewModel.Firstname = TransferTypePhysical.Firstname;
+        transferSentViewModel.Lastname = TransferTypePhysical.Lastname;
+        transferSentViewModel.IdPays = TransferTypePhysical.IdPays;
+        transferSentViewModel.AmountToSend = TransferTypePhysical.Amount;
 
+        var response = await HttpClient.PostAsJsonAsync("/api/TransferSent/ValidTransferPhysical", transferSentViewModel);
+        if (response.IsSuccessStatusCode)
+        {
+            TransferTypePhysical.CodeRef = await response.Content.ReadAsStringAsync();
+            TransferTypePhysical.Etape = 3;
+        }
+
+        TransferTypePhysical.Loading = false;
+    }
+    protected async Task ValidTransferTypeUser()
+    {
+        TransferTypeUser.Loading = true;
+
+        var response = await HttpClient.GetAsync("/api/QrCodeGenerator/GenerateForTransfer/" + TransferTypeUser.Amount, HttpCompletionOption.ResponseContentRead);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var data = await response.Content.ReadAsByteArrayAsync();
+            TransferTypeUser.QrCode = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(data));
+            TransferTypeUser.DisplayQrCode = true;
+        }
+
+        TransferTypeUser.Loading = false;
+    }
     private void GetListContact()
     {
         for (int i = 0; i < 25; i++)

@@ -162,7 +162,7 @@ Sed ut tum ad senem senex de senectute, sic hoc l</value>
     <value>Veuillez entrer le nombre de jeton à envoyer</value>
   </data>
   <data name="LabelSelectTypeFriend" xml:space="preserve">
-    <value>Un ami (Toute personne dans la sa liste de contact)</value>
+    <value>Un ami</value>
   </data>
   <data name="LabelSelectTypePhysical" xml:space="preserve">
     <value>Une personne physique</value>

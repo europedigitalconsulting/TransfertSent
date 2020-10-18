@@ -1,16 +1,15 @@
 ﻿@namespace Cryptocoin.Client.Feature.Transfer.Received
 @code{
 
-    [Parameter]
-    public string PathApiTransferQrCodeReceived { get; set; }
-    [Parameter]
-    public string PathApiTransferValidTransfer { get; set; }
-    [Parameter]
-    public string TxtAmountToSend { get; set; }
-    [Parameter]
-    public string BtnValidTransaction { get; set; }
-    [Parameter]
-    public string TxtUser { get; set; }
+    [Parameter] public EventCallback ValidTransaction { get; set; }
+    [Parameter] public string TxtAmountToSend { get; set; }
+    [Parameter] public string TxtUser { get; set; }
+    [Parameter] public string BtnValidTransaction { get; set; }
+    [Parameter] public string Firstname { get; set; }
+    [Parameter] public string QrCode { get; set; }
+    [Parameter] public string Lastname { get; set; }
+    [Parameter] public int? AmountToSend { get; set; }
+
 }
 
 <div class="card-body">
@@ -22,10 +21,10 @@
     else
     {
         <ul>
-            <li>@TxtUser @Model?.Firstname @Model?.Lastname</li>
-            <li>@TxtAmountToSend @Model?.AmountToSend</li>
+            <li>@TxtUser @Firstname @Lastname</li>
+            <li>@TxtAmountToSend @AmountToSend</li>
         </ul>
-        <button @onclick="ValidTransact" class="btn btn-primary">@BtnValidTransaction</button>
+        <button @onclick="ValidTransactionClick" class="btn btn-primary">@BtnValidTransaction</button>
     }
 
 </div>

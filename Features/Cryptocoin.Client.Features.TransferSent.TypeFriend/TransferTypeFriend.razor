@@ -1,39 +1,22 @@
 ﻿@namespace Cryptocoin.Client.Features.Transfer.Sent
 @code{
-    [Parameter]
-    public string TransferTypeFriendPanelTitle { get; set; }
-    [Parameter]
-    public EventCallback<bool> ClickCancel { get; set; }
-    [Parameter]
-    public IReadOnlyList<Contact> ListContact { get; set; }
-    [Parameter]
-    public string TxtTransferInProgress { get; set; }
-    [Parameter]
-    public string TxtSelectContact { get; set; }
-    [Parameter]
-    public string LabelNumberOfTokensToSend { get; set; }
-    [Parameter]
-    public string BtnSelectSender { get; set; }
-    [Parameter]
-    public string BtnCancel { get; set; }
-    [Parameter]
-    public string BtnValid { get; set; }
-    [Parameter]
-    public string BtnConfirmTransfer { get; set; }
-    [Parameter]
-    public string BtnReturnDashboard { get; set; }
-    [Parameter]
-    public string TxtYouHaveSelected { get; set; }
-    [Parameter]
-    public string TxtAmountToTokens { get; set; }
-    [Parameter]
-    public int AmountInStock { get; set; }
-    [Parameter]
-    public string BtnSearch { get; set; }
-    [Parameter]
-    public string ContactListPanelTitle { get; set; }
-    [Parameter]
-    public string PathApiValidTransfer { get; set; }
+    [Parameter] public string TransferTypeFriendPanelTitle { get; set; }
+    [Parameter] public EventCallback<bool> ClickCancel { get; set; }
+    [Parameter] public EventCallback ValidTransfer { get; set; }
+    [Parameter] public IReadOnlyList<Contact> ListContact { get; set; }
+    [Parameter] public string TxtTransferInProgress { get; set; }
+    [Parameter] public string TxtSelectContact { get; set; }
+    [Parameter] public string LabelNumberOfTokensToSend { get; set; }
+    [Parameter] public string BtnSelectSender { get; set; }
+    [Parameter] public string BtnCancel { get; set; }
+    [Parameter] public string BtnValid { get; set; }
+    [Parameter] public string BtnConfirmTransfer { get; set; }
+    [Parameter] public string BtnReturnDashboard { get; set; }
+    [Parameter] public string TxtYouHaveSelected { get; set; }
+    [Parameter] public string TxtAmountToTokens { get; set; }
+    [Parameter] public int AmountInStock { get; set; }
+    [Parameter] public string BtnSearch { get; set; }
+    [Parameter] public string ContactListPanelTitle { get; set; }
 }
 
 <div class="card-header">

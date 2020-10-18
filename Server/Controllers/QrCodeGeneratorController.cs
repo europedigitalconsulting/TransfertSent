@@ -12,6 +12,8 @@ namespace Cryptocoin.Server.Controllers
     [ApiController]
     public class QrCodeGeneratorController : ControllerBase
     {
+        const string key = "E546C8DF278CD5931069B522E695D4F2";
+
         [HttpGet]
         public async Task<ActionResult<byte[]>> Generate(string link)
         {
@@ -20,9 +22,16 @@ namespace Cryptocoin.Server.Controllers
                 return File(GenerateQrCode(link), "image/png");
             });
         }
-        [HttpGet("GenerateForTransfer/{link}")]
-        public async Task<ActionResult<byte[]>> GenerateForTransfer(string link)
+        [HttpGet("GenerateForTransfer/{AmountToSend}")]
+        public async Task<ActionResult<byte[]>> GenerateForTransfer(int amountToSend)
         {
+            TransferSentViewModel transferSentViewModel = new TransferSentViewModel();
+            transferSentViewModel.AmountToSend = amountToSend;
+            transferSentViewModel.Email = User.Email();
+            transferSentViewModel.UserId = User.NameIdentifier();
+            transferSentViewModel.Firstname = User.DisplayName();
+
+            string link = CryptHelper.Rijndael.Encrypt(JsonConvert.SerializeObject(transferSentViewModel), key);
             string url = "https://localhost:44354/receive/QrCodeReceived?Key=" + link;
 
             return await Task.Run(() =>

@@ -1,6 +1,7 @@
 ﻿using Cryptocoin.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 using QRCoder;
 using System;
@@ -13,7 +14,7 @@ namespace Cryptocoin.Server.Controllers
     [Authorize]
     public class TransferReceivedController : ControllerBase
     {
-        public string key = "E546C8DF278CD5931069B522E695D4F2";
+        const string key = "E546C8DF278CD5931069B522E695D4F2";
 
         [HttpGet("QrCodeReceived/{qrCode}")]
         public async Task<ActionResult<TransferSentViewModel>> QrCodeReceived(string qrCode)
@@ -22,13 +23,13 @@ namespace Cryptocoin.Server.Controllers
             string data = CryptHelper.Rijndael.Decrypt(qrCode, key);
 
             TransferSentViewModel model = JsonConvert.DeserializeObject<TransferSentViewModel>(data);
-            return Ok(model);
+            return await Task.Run(() => { return Ok(model); });
         }
-        [HttpGet("ValidTransfer/{qrCode}")]
-        public async Task<ActionResult<TransferSentViewModel>> ValidTransfer(string qrCode)
+        [HttpGet("ValidTransferQrCode/{qrCode}")]
+        public async Task<ActionResult<TransferSentViewModel>> ValidTransferQrCode(string qrCode)
         {
             string data = CryptHelper.Rijndael.Decrypt(qrCode, key);
-            return Ok();
+            return await Task.Run(() => { return Ok(); });
         }
     }
 }

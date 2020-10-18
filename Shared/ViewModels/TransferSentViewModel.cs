@@ -8,6 +8,7 @@ namespace Cryptocoin.Shared
 {
     public class TransferSentViewModel
     {
+        public string UserId { get; set; }
         public int AmountToSend { get; set; } = 0;
 
         public int IdPays { get; set; }

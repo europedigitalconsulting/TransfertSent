@@ -16,40 +16,19 @@ namespace Cryptocoin.Client.Feature.Transfer.Received
 {
     public partial class ReceiveTypeQrCode : ComponentBase
     {
-        [Inject]
-        protected HttpClient HttpClient { get; set; }
-        [Inject]
-        protected NavigationManager NavManager { get; set; }
-        public TransferSentViewModel Model { get; set; }
-        public string QrCode { get; set; }
         public bool TransactionSuccess { get; set; } = false;
-        public bool Loading { get; set; } = true;
-     
+        public bool Loading { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
-            var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
 
-            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("key", out var param))
-            {
-                QrCode = param.First();
-                var response = await HttpClient.GetAsync(PathApiTransferQrCodeReceived + QrCode, HttpCompletionOption.ResponseContentRead);
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsStringAsync();
-                    Model = JsonConvert.DeserializeObject<TransferSentViewModel>(result);
-                    Loading = false;
-                }
-            }
         }
-
-        public async Task ValidTransact()
+        private async Task ValidTransactionClick()
         {
             Loading = true;
-            var response = await HttpClient.GetAsync(PathApiTransferValidTransfer + QrCode, HttpCompletionOption.ResponseContentRead);
-            if (response.IsSuccessStatusCode)
-            {
-                NavManager.NavigateTo("/");
-            }
+            await ValidTransaction.InvokeAsync(null);
         }
+
+
     }
 }

@@ -14,7 +14,7 @@ namespace Cryptocoin.Client.Features.Transfer.Sent
     public partial class TransferTypeFriend : ComponentBase
     {
         private int AmountToSend { get; set; } = 0;
-        protected int Amount
+        public int Amount
         {
             get
             {
@@ -28,12 +28,10 @@ namespace Cryptocoin.Client.Features.Transfer.Sent
                     AmountToSend = value;
             }
         }
-        protected Contact SelectedContact;
-        protected string MessageValidatedTransfer = null;
-        protected bool Loading { get; set; } = false; 
-        protected int Page { get; set; } = 1;
-        [Inject]
-        protected HttpClient HttpClient { get; set; }
+        public Contact SelectedContact;
+        public string MessageValidatedTransfer = null;
+        public  bool Loading { get; set; } = false; 
+        public int Page { get; set; } = 1;
 
         protected void GoSearchContact()
         {
@@ -50,24 +48,7 @@ namespace Cryptocoin.Client.Features.Transfer.Sent
         }
         protected async Task ConfirmTransfer()
         {
-            Page = 4;
-            Loading = true;
-            TransferSentViewModel model = new TransferSentViewModel
-            {
-                AmountToSend = AmountToSend,
-                IdPays = 2,
-                Email = "okk@free.fr",
-                Firstname = "tot",
-                Lastname = "tititi",
-                SelectedContact = SelectedContact
-            };
-            var response = await HttpClient.PostAsJsonAsync(PathApiValidTransfer, model);
-            if (response.IsSuccessStatusCode)
-            {
-                MessageValidatedTransfer = await response.Content.ReadAsStringAsync();
-                Loading = false;
-            }
-            StateHasChanged();
+            await ValidTransfer.InvokeAsync(null);
         }
 
     }
